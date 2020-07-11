@@ -1,6 +1,7 @@
 const fs = require("fs");
 const util = require("util");
 const noteData = "db/db.json"
+const uuidv1 = require("uuid/v1")
 
 // PROMISIFY
 // =============================================================
@@ -20,7 +21,13 @@ class DB {
 
     async writeJSON(noteArr, existingNotes) {
         try {
-            const combineNotes = [noteArr, ...existingNotes]
+            const {title, text} = noteArr;
+            const newNote = {title, text, id: uuidv1()}
+                
+            
+            // console.log(newNote)
+            // console.log(existingNotes)
+            const combineNotes = [newNote, ...existingNotes]
             await writeFileAsync(noteData, JSON.stringify(combineNotes))
         } catch (err) {
             throw err
@@ -28,17 +35,14 @@ class DB {
     }
 }
 
+// readfiles 
+// filter by ID
+// 
+const Test = notes.filter(function(id){
+    return id !== idRequested;
+})
+
+// 
+// write to file
+
 module.exports = new DB();
-
-
-// Router.get instead of app/get
-// router.get('api/notes', async (req,res) => res.json(await DB.readJSON))
-
-// router.post('api/notes', async (req,res) => {
-// const newNote = req.body
-// const currentNotes = await DB.readJSON();
-// await DB.writeJSON(newNote, currentNotes) //?
-// res.json(newNotes)
-// })
-
-// module.exports = new DB();
