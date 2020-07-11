@@ -1,0 +1,42 @@
+const path = require("path");
+const fs = require("fs");
+const router = express.Router();
+const noteData = "../db/db.json"
+
+// PROMISIFY
+// =============================================================
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
+
+
+class DB {
+    async readJSON() {
+        try {
+            const notesRaw = readFileAsync(noteData, "utf8")
+            return notesRaw ? JSON.parse(notesRaw) : []
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async writeJSON(noteArr) {
+        try {
+            await writeFileAsync(noteData, JSON.stringify(noteArr))
+        } catch (err) {
+            throw err
+        }
+    }
+}
+
+module.exports = new DB();
+
+
+// Router.get instead of app/get
+router.get('api/notes', async (req,res) => res.json(await DB.readJSON))
+
+router.post('api/notes', async (req,res) => {
+const newNote = req.body
+const currentNotes = await DB.readJSON();
+await DB.writeJSON(newNote, currentNotes) //?
+res.json(newNotes)
+})
