@@ -1,11 +1,9 @@
 // DEPENDENCIES
 // =============================================================
 const express = require("express");
-// const util = require("util");
 const path = require("path");
-const fs = require("fs");
 const DB = require("./dbedit.js");
-const noteData = "/db/db.json"
+
 // SETS UP THE EXPRESS APP
 // =============================================================
 const app = express();
@@ -16,7 +14,7 @@ const PORT = process.env.PORT || 8080;
 // =============================================================
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(express.static('public'));
 
 // GET CALLS
 // =============================================================
@@ -61,13 +59,13 @@ app.listen(PORT, function () {
 // TESTING ROUTES
 // =============================================================
 
-app.get("/api/notes", function (req, res) {
-    res.sendFile(path.join(__dirname, noteData))
-});
+// app.get("/api/notes", function (req, res) {
+//     res.sendFile(path.join(__dirname, noteData))
+// });
 
-// app.get('/api/notes', async (req, res) => {
-//     res.json(await DB.readJSON)
-// })
+app.get('/api/notes', async (req, res) => {
+    res.json(await DB.readJSON())
+})
 
 app.post('/api/notes', async (req, res) => {
     const newNote = req.body

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const util = require("util");
-const noteData = "/db/db.json"
+const noteData = "db/db.json"
 
 // PROMISIFY
 // =============================================================
@@ -11,7 +11,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
 class DB {
     async readJSON() {
         try {
-            const notesRaw = readFileAsync(noteData, "utf8")
+            const notesRaw = await readFileAsync(noteData, "utf8")
             return notesRaw ? JSON.parse(notesRaw) : []
         } catch (err) {
             throw err
