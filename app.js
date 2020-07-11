@@ -59,10 +59,6 @@ app.listen(PORT, function () {
 // TESTING ROUTES
 // =============================================================
 
-// app.get("/api/notes", function (req, res) {
-//     res.sendFile(path.join(__dirname, noteData))
-// });
-
 app.get('/api/notes', async (req, res) => {
     res.json(await DB.readJSON())
 })
@@ -71,5 +67,5 @@ app.post('/api/notes', async (req, res) => {
     const newNote = req.body
     const currentNotes = await DB.readJSON();
     await DB.writeJSON(newNote, currentNotes) //?
-    res.json(newNotes)
+    res.json(newNote)
 })

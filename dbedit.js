@@ -18,9 +18,10 @@ class DB {
         }
     }
 
-    async writeJSON(noteArr) {
+    async writeJSON(noteArr, existingNotes) {
         try {
-            await writeFileAsync(noteData, JSON.stringify(noteArr))
+            const combineNotes = [noteArr, ...existingNotes]
+            await writeFileAsync(noteData, JSON.stringify(combineNotes))
         } catch (err) {
             throw err
         }
