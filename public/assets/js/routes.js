@@ -1,3 +1,5 @@
+// DEPENDENCIES
+// =============================================================
 const express =require("express");
 const path = require("path")
 const router = express.Router();
@@ -7,15 +9,15 @@ const DB = require("./dbedit.js");
 // GET CALLS
 // =============================================================
 
-router.get("/notes.html", function (req, res) {
+router.get("/notes.html", (req, res) => {
     res.sendFile(path.join(__dirname, "../../notes.html"));
 });
 
 router.get('/api/notes', async (req, res) => {
     res.json(await DB.readJSON())
-})
+});
 
-router.get("*", function (req, res) {
+router.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../../index.html"));
 });
 
