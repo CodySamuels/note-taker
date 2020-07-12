@@ -1,8 +1,7 @@
 // DEPENDENCIES
 // =============================================================
 const express = require("express");
-const path = require("path");
-const DB = require("./dbedit.js");
+
 
 // SETS UP THE EXPRESS APP
 // =============================================================
@@ -16,38 +15,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-// GET CALLS
+
+// ROUTING
 // =============================================================
+const routes = require('./public/assets/js/routes');
+app.use(routes);
 
-app.get("/notes.html", function (req, res) {
-    res.sendFile(path.join(__dirname, "/public/notes.html"));
-});
-
-app.get('/api/notes', async (req, res) => {
-    res.json(await DB.readJSON())
-})
-
-app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
-});
-
-// POST CALLS
-// =============================================================
-app.post('/api/notes', async (req, res) => {
-    const newNoteData = req.body
-    const currentNotes = await DB.readJSON();
-    await DB.writeJSON(newNoteData, currentNotes)
-    res.json("Success!")
-})
-
-// DELETE CALLS
-// =============================================================
-app.delete('/api/notes/:id', async (req, res) => {
-    const requestedID = req.params.id;
-    const currentNotes = await DB.readJSON();
-    await DB.deleteJSON(currentNotes, requestedID)
-    res.json("Success!")
-})
 
 // STARTS THE SERVER TO BEGIN LISTENING
 // =============================================================
