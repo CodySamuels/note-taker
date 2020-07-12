@@ -4,7 +4,6 @@ const express = require("express");
 const path = require("path");
 const DB = require("./dbedit.js");
 
-
 // SETS UP THE EXPRESS APP
 // =============================================================
 const app = express();
@@ -38,7 +37,7 @@ app.post('/api/notes', async (req, res) => {
     const newNoteData = req.body
     const currentNotes = await DB.readJSON();
     await DB.writeJSON(newNoteData, currentNotes)
-    res.json(newNoteData)
+    res.json("Success!")
 })
 
 // DELETE CALLS
@@ -46,8 +45,8 @@ app.post('/api/notes', async (req, res) => {
 app.delete('/api/notes/:id', async (req, res) => {
     const requestedID = req.params.id;
     const currentNotes = await DB.readJSON();
-    const remainingNotes = await DB.deleteJSON(currentNotes, requestedID)
-    res.json(remainingNotes)
+    await DB.deleteJSON(currentNotes, requestedID)
+    res.json("Success!")
 })
 
 // STARTS THE SERVER TO BEGIN LISTENING
