@@ -8,7 +8,6 @@ const DB = require("./dbedit.js");
 
 // GET CALLS
 // =============================================================
-
 router.get("/notes.html", (req, res) => {
     res.sendFile(path.join(__dirname, "../../notes.html"));
 });
@@ -21,6 +20,7 @@ router.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../../index.html"));
 });
 
+
 // POST CALLS
 // =============================================================
 router.post('/api/notes', async (req, res) => {
@@ -29,6 +29,7 @@ router.post('/api/notes', async (req, res) => {
     await DB.writeJSON(newNoteData, currentNotes)
     res.json("Success!")
 })
+
 
 // DELETE CALLS
 // =============================================================
@@ -39,4 +40,7 @@ router.delete('/api/notes/:id', async (req, res) => {
     res.json("Success!")
 })
 
+
+// EXPORT
+// =============================================================
 module.exports = router;
