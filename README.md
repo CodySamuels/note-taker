@@ -28,7 +28,6 @@ SO THAT I can organize my thoughts and keep track of tasks I need to complete
 
   
   ## Usage
-  [How to use Video](https://drive.google.com/file/d/18jgKTyMM2ZCRTxbSxK03JAnB8KOthbFP/view?usp=sharing)
 
     The GUI is easy to use and responsive. 
     1. Click "Get Started." That will take you to the main page. 
